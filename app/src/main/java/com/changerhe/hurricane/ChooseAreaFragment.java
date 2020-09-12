@@ -101,41 +101,41 @@ public class ChooseAreaFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        listView.setOnItemClickListener(new AdapterView<>() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (currentLevel == LEVEL_PROVINCE) {
-//                    selectedProvince = provinceList.get(position);
-//                    queryCities();
-//                } else if (currentLevel == LEVEL_CITY) {
-//                    selectedCity = cityList.get(position);
-//                    queryCounties();
-//                } else if (currentLevel == LEVEL_COUNTY) {
-//                    String weatherId = countyList.get(position).getWeatherId();
-//                    if (getActivity() instanceof MainActivity) {
-//                        Intent intent = new Intent(getActivity(), MainActivity.class);
-//                        intent.putExtra("weather_id", weatherId);
-//                        startActivity(intent);
-//                        getActivity().finish();
-//                    } else if (getActivity() instanceof MainActivity) {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (currentLevel == LEVEL_PROVINCE) {
+                    selectedProvince = provinceList.get(position);
+                    queryCities();
+                } else if (currentLevel == LEVEL_CITY) {
+                    selectedCity = cityList.get(position);
+                    queryCounties();
+                } else if (currentLevel == LEVEL_COUNTY) {
+                    String weatherId = countyList.get(position).getWeatherId();
+                    if (getActivity() instanceof MainActivity) {
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        intent.putExtra("weather_id", weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
+                    } else if (getActivity() instanceof MainActivity) {
 //                        MainActivity activity = (MainActivity) getActivity();
 //                        activity.drawerLayout.closeDrawers();
 //                        activity.swipeRefresh.setRefreshing(true);
 //                        activity.requestWeather(weatherId);
-//                    }
-//                }
-//            }
-//        });
-//        backButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (currentLevel == LEVEL_COUNTY) {
-//                    queryCities();
-//                } else if (currentLevel == LEVEL_CITY) {
-//                    queryProvinces();
-//                }
-//            }
-//        });
+                    }
+                }
+            }
+        });
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentLevel == LEVEL_COUNTY) {
+                    queryCities();
+                } else if (currentLevel == LEVEL_CITY) {
+                    queryProvinces();
+                }
+            }
+        });
         queryProvinces();
     }
 
@@ -226,10 +226,11 @@ public class ChooseAreaFragment extends Fragment {
                     result = Utility.handleProvinceResponse(responseText);
                 } else if ("city".equals(type)) {
                     result = Utility.handleCityResponse(responseText, selectedProvince.getId());
-                } else if ("county".equals(type)) {
+                } else if ("country".equals(type)) {
                     result = Utility.handleCountyResponse(responseText, selectedCity.getId());
                 }
                 if (result) {
+                    Log.d(TAG, "onResponse: result: " + result);
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
