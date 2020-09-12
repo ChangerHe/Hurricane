@@ -1,0 +1,9 @@
+<litepal>
+    <dbname value="hurricane" />
+    <version value="1" />
+    <list>
+        <mapping class="com.changerhe.hurricane.db.City" />
+        <mapping class="com.changerhe.hurricane.db.Country" />
+        <mapping class="com.changerhe.hurricane.db.Province" />
+    </list>
+</litepal>
